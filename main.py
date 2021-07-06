@@ -9,13 +9,13 @@ pygame.init()
 
 game_status = "play"
 
-screen = pygame.display.set_mode((1200, 700))
+screen = pygame.display.set_mode((1200, 650))
 pygame.display.set_caption("Shubham_In_Space")
-icon = pygame.image.load('myphoto.png')
+icon = pygame.image.load('images/galaxy.png')
 pygame.display.set_icon(icon)
 
 # Background sound
-mixer.music.load('adventure.wav')
+mixer.music.load('sounds/adventure.wav')
 mixer.music.play(-1)
 
 # Score
@@ -29,10 +29,10 @@ textY = 10
 game_over = pygame.font.Font('freesansbold.ttf', 65)
 
 # Background Image
-background = pygame.image.load('Space-min.png')
+background = pygame.image.load('images/back.png')
 
 # Player
-playerImg = pygame.image.load('spaceship.png')
+playerImg = pygame.image.load('images/spaceship.png')
 playerX = 600
 playerY = 600
 playerX_change = 0
@@ -47,14 +47,14 @@ enemyY_change = []
 num_of_enemies = 10
 
 for i in range(num_of_enemies):
-    enemyImg.append(pygame.image.load('pirate.png'))
+    enemyImg.append(pygame.image.load('images/octopus.png'))
     enemyX.append(random.randint(0, 1136))
     enemyY.append(random.randint(0, 230))
     enemyX_change.append(0.3)
     enemyY_change.append(40)
 
 # Bullet
-bulletImg = pygame.image.load('bullet.png')
+bulletImg = pygame.image.load('images/bullet.png')
 bulletX = 0
 bulletY = 0
 bulletX_change = 0
@@ -114,8 +114,8 @@ while running:
             if event.key == pygame.K_DOWN:
                 playerY_change = 0.5
             if event.key == pygame.K_SPACE:
-                if bullet_state is "ready":
-                    bullet_sound = mixer.Sound('bullet.wav')
+                if bullet_state == "ready":
+                    bullet_sound = mixer.Sound('sounds/bullet.wav')
                     bullet_sound.play()
                     bulletX = playerX
                     bulletY = playerY
@@ -154,13 +154,13 @@ while running:
             enemyY[i] += enemyY_change[i]
         elif enemyY[i] >= 636:
             enemyY[i] = 636
-        if game_status is "stop":
+        if game_status == "stop":
             break
 
         # collision
         collision = iscollision(enemyX[i], enemyY[i], bulletX, bulletY)
         if collision:
-            collide_sound = mixer.Sound('Splat2.wav')
+            collide_sound = mixer.Sound('sounds/Splat2.wav')
             collide_sound.play()
             bulletY = 600
             bullet_state = "ready"
@@ -175,7 +175,7 @@ while running:
         bulletY = 0
         bullet_state = "ready"
 
-    if bullet_state is "fire":
+    if bullet_state == "fire":
         fire_bullet(bulletX, bulletY)
         bulletY -= bulletY_change
 
